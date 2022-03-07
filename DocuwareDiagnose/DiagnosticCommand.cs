@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 using CommandLine;
 using DocuWare.Platform.ServerClient;
 
-namespace DocuwareDiagnose
+namespace DocuwareDiagnosis
 {
     abstract internal class DiagnosticCommand
     {
         protected ServiceConnection PlatformClient { get; set; }
 
         [Option("platform", HelpText = "URI to the DocuWare Platform.", Required = true)]
-        public String Platform { get; set; }
+        public string Platform { get; set; }
 
-        [Option('u', "username", HelpText = "DocuWare Username")]
-        public String Username { get; set; }
+        [Option('u', "username", HelpText = "DocuWare Username", Group = "Credentials")]
+        public string Username { get; set; }
 
         [Option('p', "password", HelpText = "DocuWare Password")]
-        public String Password { get; set; }
+        public string Password { get; set; }
 
-        [Option("sso", HelpText = "Use single sign on.")]
-        public Boolean SingleSignOn { get; set; }
+        [Option("sso", HelpText = "Use single sign on.", Group = "Credentials")]
+        public bool SingleSignOn { get; set; }
 
-        public abstract void PerformQuery();
+        public abstract DiagnosticResult PerformDiagnosis();
 
         protected void Connect()
         {
@@ -34,16 +34,15 @@ namespace DocuwareDiagnose
                 PlatformClient = ServiceConnection.CreateWithWindowsAuthentication(platformUri, System.Net.CredentialCache.DefaultCredentials);
             } else
             {
-
                 PlatformClient = ServiceConnection.Create(platformUri, Username, Password);
             }
-
         }
 
         public void Execute()
         {
             Connect();
-            PerformQuery();
+            DiagnosticResult result = PerformDiagnosis();
+            Console.WriteLine(result.Summary);
             Disconnect();
         }
 

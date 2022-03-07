@@ -2,14 +2,16 @@
 using DocuWare.Platform.ServerClient;
 using CommandLine;
 
-namespace DocuwareDiagnose
+namespace DocuwareDiagnosis
 {
     [Verb("dwversion")]
     class VersionDiagnosticCommand : DiagnosticCommand
     {
-        public override void PerformQuery()
+        public override DiagnosticResult PerformDiagnosis()
         {
-            Console.WriteLine(PlatformClient.ServiceDescription.Version);
+            DiagnosticResult result = new DiagnosticResult();
+            result.Summary = PlatformClient.ServiceDescription.Version;
+            return result;
         }
     }
 }

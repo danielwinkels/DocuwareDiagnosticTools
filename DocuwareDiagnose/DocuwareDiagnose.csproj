@@ -59,9 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiagnosticResult.cs" />
     <Compile Include="DiagnosticCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryOrganizationsDiagnosticCommand.cs" />
     <Compile Include="VersionDiagnosticCommand.cs" />
   </ItemGroup>
   <ItemGroup>

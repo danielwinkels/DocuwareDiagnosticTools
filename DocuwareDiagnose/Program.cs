@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DocuwareDiagnose
+namespace DocuwareDiagnosis
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<DummyCommand, VersionDiagnosticCommand>(args).WithParsed<DiagnosticCommand>(t => t.Execute());
+            Parser.Default.ParseArguments<QueryOrganizationsDiagnosticCommand, VersionDiagnosticCommand, QueryUsersByOrganizationDiagnosticCommand>(args).WithParsed<DiagnosticCommand>(t => t.Execute());
         }
     }
 
     [Verb("dummy")]
     class DummyCommand : DiagnosticCommand
     {
-        public override void PerformQuery()
+        public override DiagnosticResult PerformDiagnosis()
         {
             throw new System.NotImplementedException();
         }
